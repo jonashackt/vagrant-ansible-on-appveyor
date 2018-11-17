@@ -1,0 +1,7 @@
+- hosts: all
+  become: yes
+  tasks:
+  - name: Update apt
+    apt:
+      update_cache: yes
+    tags: update
