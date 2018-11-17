@@ -10,23 +10,26 @@ addons:
   apt:
     packages:
     - python-pip
+    - virtualbox
 
 install:
   # Install ansible
   - pip install ansible
-
   # Check ansible version
   - ansible --version
-
   # Create ansible.cfg with correct roles_path
   - printf '[defaults]\nroles_path=../' >ansible.cfg
+  # Download Vagrant
+  - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
+  # Install Vagrant package
+  - sudo dpkg -i vagrant_2.2.1_x86_64.deb
 
 script:
-  # Basic playbook syntax check
-  - ansible-playbook k8s-certs-and-config.yml -i hosts --syntax-check
-  - ansible-playbook k8s-master-nodes.yml -i hosts --syntax-check
-  - ansible-playbook k8s-worker-nodes.yml -i hosts --syntax-check
-  - ansible-playbook k8s-external-access.yml -i hosts --syntax-check
+  - vagrant up
+  - ansible-playbook playbook.yml -i hosts --syntax-check
+  - ansible-playbook playbook.yml -i hosts
 
 notifications:
   webhooks: https://galaxy.ansible.com/api/v1/notifications/
+
+
