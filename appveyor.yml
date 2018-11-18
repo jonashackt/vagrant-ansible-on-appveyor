@@ -2,20 +2,23 @@ version: '{build}-{branch}'
 image: Ubuntu1804
 init:
   - sudo apt-get -yq install python-pip virtualbox
-  - echo "**** VirtualBox correctly installed? ****"
+  # How did the VirtualBox installation go?
   - VBoxManage --version
   - sudo pip install ansible
-  - echo "**** Ansible correctly installed? ****"
+  # Ansible correctly installed?
   - ansible --version
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
+  # Install Vagrant package
   - sudo dpkg -i vagrant_2.2.1_x86_64.deb
-  - echo "**** Vagrant correctly installed? ****"
+  # Vagrant correctly installed?
   - vagrant --version
 
-build_script:
-  - vagrant up
+#build_script:
+  #- vagrant up
   #|| ssh vagrant@127.0.0.1 -p 2222 -i .vagrant\machines\default\virtualbox\private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -vvv -C "pwd"
   #- vagrant ssh -c "uname -a"
+build: off
 test: off
 test_script:
+  - vagrant up
   - ansible-playbook playbook.yml -i hosts --syntax-check
