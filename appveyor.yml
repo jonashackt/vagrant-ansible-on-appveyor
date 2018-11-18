@@ -1,7 +1,7 @@
 version: '{build}-{branch}'
 image: Ubuntu1804
 init:
-  - sudo apt-get install python-pip virtualbox
+  - sudo apt-get -yq install python-pip virtualbox
   # How did the VirtualBox installation go?
   - VBoxManage --version
   - pip install ansible
