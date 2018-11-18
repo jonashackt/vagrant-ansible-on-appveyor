@@ -1,4 +1,7 @@
 # vagrant-ansible-on-travisci
+
+[![Build status](https://ci.appveyor.com/api/projects/status/i7865icuuhd6457s?svg=true)](https://ci.appveyor.com/project/jonashackt/vagrant-ansible-on-appveyor)
+
 Example project showing how to install and use Vagrant on TravisCI and how to use a Ansible playbook to connect to the running Vagrant Box inside Travis
 
 
@@ -90,6 +93,12 @@ In the end I overlooked this comment here: https://stackoverflow.com/questions/3
 
 
 ## Vagrant on AppVeyor
+
+Good resources: 
+
+https://help.appveyor.com/discussions/problems/1247-vagrant-not-working-inside-appveyor
+
+https://ci.appveyor.com/project/tknerr/vagrant-appveyor-testing/history
 
 [Ubuntu Image specs on AppVeyor](https://www.appveyor.com/docs/linux-images-software/)
 
