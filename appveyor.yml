@@ -9,6 +9,9 @@ init:
   - ansible --version
 
 install:
+  # we have to download Vagrant in the install step (not init), because otherwise we´ll run into errors like
+  # fatal: destination path '/home/appveyor/projects/vagrant-ansible-on-appveyor' already exists and is not an empty directory.
+  # see https://help.appveyor.com/discussions/problems/2367-git-clone-fails-non-empty-dir
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
   # Install Vagrant package
   - sudo dpkg -i vagrant_2.2.1_x86_64.deb

@@ -3,7 +3,7 @@ Vagrant.configure("2") do |config|
 
     config.vm.define 'ubuntu'
     config.vm.hostname = 'ubuntu'
-    config.dns.tld = 'k8s'
+    #config.dns.tld = 'k8s'
 
     config.vm.network "private_network", ip: '172.16.2.88'
 
