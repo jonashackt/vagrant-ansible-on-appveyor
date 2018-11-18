@@ -1,0 +1,31 @@
+#python:
+#  version: 2.7.8
+dependencies:
+  cache_directories:
+  - ~/.vagrant.d
+  - ~/tmp
+  pre:
+  - |
+    mkdir -p ~/tmp
+    cd ~/tmp
+    VERSION=2.2.1
+    if [ ! -f vagrant_${VERSION}_x86_64.deb ]; then
+      wget -nv https://releases.hashicorp.com/vagrant/${VERSION}/vagrant_${VERSION}_x86_64.deb
+    fi
+    sudo dpkg -i vagrant_${VERSION}_x86_64.deb
+
+#  - |
+#    if ! vagrant plugin list | fgrep -q vagrant-aws; then
+#      vagrant plugin install vagrant-aws
+#    fi
+
+  - pip install ansible
+
+test:
+  pre:
+  - vagrant up
+  #- vagrant ssh-config --host=ec2 ec2 >> ~/.ssh/config
+  - ansible-playbook playbook.yml -i hosts --syntax-check
+  - ansible-playbook playbook.yml -i hosts
+  post:
+  - vagrant destroy -f
