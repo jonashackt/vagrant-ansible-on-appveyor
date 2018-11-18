@@ -9,7 +9,7 @@ Vagrant.configure("2") do |config|
 
     #config.dns.tld = 'k8s'
 
-    config.vm.network "private_network", ip: '172.16.2.88'
+    #config.vm.network "private_network", ip: '172.16.2.88'
 
     config.vm.provider :virtualbox do |vb|
         vb.name = 'ubuntu'
