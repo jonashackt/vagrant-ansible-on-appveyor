@@ -10,6 +10,10 @@ init:
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
   # Install Vagrant package
   - sudo dpkg -i vagrant_2.2.1_x86_64.deb
+  # Vagrant correctly installed?
+  - vagrant --version
+  # Clean pre-cloned repofolder
+  - sudo rm -rf /home/appveyor/projects/vagrant-ansible-on-appveyor
 
 build_script:
   - vagrant up
