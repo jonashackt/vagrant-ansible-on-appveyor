@@ -4,7 +4,7 @@ init:
   - sudo apt-get -yq install python-pip virtualbox
   # How did the VirtualBox installation go?
   - VBoxManage --version
-  - pip install ansible
+  - sudo pip install ansible
   # Ansible correctly installed?
   - ansible --version
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
