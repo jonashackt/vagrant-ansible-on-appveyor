@@ -2,18 +2,15 @@ version: '{build}-{branch}'
 image: Ubuntu1804
 init:
   - sudo apt-get -yq install python-pip virtualbox
-  # How did the VirtualBox installation go?
+  - echo "**** VirtualBox correctly installed? ****"
   - VBoxManage --version
   - sudo pip install ansible
-  # Ansible correctly installed?
+  - echo "**** Ansible correctly installed? ****"
   - ansible --version
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
-  # Install Vagrant package
   - sudo dpkg -i vagrant_2.2.1_x86_64.deb
-  # Vagrant correctly installed?
+  - echo "**** Vagrant correctly installed? ****"
   - vagrant --version
-  # Clean pre-cloned repofolder
-  - sudo rm -rf /home/appveyor/projects/vagrant-ansible-on-appveyor
 
 build_script:
   - vagrant up
