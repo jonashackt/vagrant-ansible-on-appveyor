@@ -7,18 +7,19 @@ init:
   - sudo pip install ansible
   # Ansible correctly installed?
   - ansible --version
+
+install:
   - sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
   # Install Vagrant package
   - sudo dpkg -i vagrant_2.2.1_x86_64.deb
   # Vagrant correctly installed?
   - vagrant --version
 
-#build_script:
-  #- vagrant up
+build_script:
+  - vagrant up
   #|| ssh vagrant@127.0.0.1 -p 2222 -i .vagrant\machines\default\virtualbox\private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -vvv -C "pwd"
   #- vagrant ssh -c "uname -a"
-build: off
+
 test: off
 test_script:
-  - vagrant up
   - ansible-playbook playbook.yml -i hosts --syntax-check
