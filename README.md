@@ -87,3 +87,7 @@ In the end I overlooked this comment here: https://stackoverflow.com/questions/3
 
 ## Vagrant on AppVeyor
 
+[Ubuntu Image specs on AppVeyor](https://www.appveyor.com/docs/linux-images-software/)
+
+[appveyor.yml Reference](https://www.appveyor.com/docs/appveyor-yml/)
+
