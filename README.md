@@ -202,3 +202,17 @@ We do this with the help of `dism`, the PowerShell comands like `Disable-Windows
 You may note, that AppVeyor also supports reboots of build workers - the `/Quiet` option prevents us from errors and `/Disable-Feature:Microsoft-Hyper-V` reboots the worker finally after removing Hyper-V.
 
 For installing VirtualBox, we´re using chocolatey for it´s ease of use here. Sadly that´s not possible for Vagrant. After problems with the chocolatey Vagrant installation (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109), I needed to download and install Vagrant manually.
+
+##### RDP into a running AppVeyor build worker
+
+It´s almost crazy what AppVeyor allows you to do: You can really connect into a worker via RDP (in case of a Windows image)! This is documented here: https://www.appveyor.com/docs/how-to/rdp-to-build-worker/ All you have to do is:
+
+1. Go to settings of your AppVeyor project and head over to `Environment`
+2. Create a new Environment variable `APPVEYOR_RDP_PASSWORD` and insert a (min. 6 long, UPPER and lower case password, with one non-alphanumeric character) password
+3. Add `- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))` to your `init` section.
+4. Push your code and the IP/Port & username will be printed in the build log for you. Use them to connect via your favorite RDP client
+
+Now you can watch things get installed and configured:
+
+![appveyor-rdp-into-worker](screenshots/appveyor-rdp-into-worker.png)
+
