@@ -4,10 +4,8 @@ image: Visual Studio 2017
 init:
   - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
     # upgrade Chocolatey installation, since there should be fixed bug (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109)
-  - ps: |
-      Install-Package chocolatey
-      Initialize-Chocolatey
-      Uninstall-Package chocolatey
+  - ps: Install-Package chocolatey
+  - ps: Initialize-Chocolatey
   - choco --version
     # Disable chocolatey´s verbose download output
   - choco feature disable --name showDownloadProgress
