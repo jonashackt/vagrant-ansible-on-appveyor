@@ -8,7 +8,6 @@ init:
   - choco install virtualbox --yes
   #- choco install vagrant --yes
 
-
 install:
   - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
   - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait

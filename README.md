@@ -150,6 +150,32 @@ As I constantly ran into timeouts in the end - and I´am realizing, that I insta
 
 ##### Visual Studio 2017 (Windows Server 2016) image on AppVeyor
 
-So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images).
+So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images). After problems with the chocolatey Vagrant installation (see &), I needed to download and install Vagrant manually:
+
+```
+version: '{build}-{branch}'
+image: Visual Studio 2017
+
+init:
+  - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
+    # Disable chocolatey´s verbose download output
+  - choco feature disable --name showDownloadProgress
+  - choco install virtualbox --yes
+  #- choco install vagrant --yes
+
+install:
+  - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
+  - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
+  - set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
+  # Vagrant correctly installed?
+  - vagrant --version
+  - ssh -V
+  - ipconfig /all
+
+build_script:
+  - ps: Test-NetConnection google.com -Port 80
+  - vagrant up
+  - vagrant ssh -c "echo 'hello world!'"
+```
 
 
