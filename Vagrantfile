@@ -7,6 +7,9 @@ Vagrant.configure("2") do |config|
     # Vagrant boot needs more time on AppVeyor (see https://help.appveyor.com/discussions/problems/1247-vagrant-not-working-inside-appveyor)
     config.vm.boot_timeout = 900
 
+    # Prevent SharedFoldersEnableSymlinksCreate errors
+    config.vm.synced_folder ".", "/vagrant", disabled: true
+
     #config.dns.tld = 'k8s'
 
     #config.vm.network "private_network", ip: '172.16.2.88'
