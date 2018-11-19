@@ -3,10 +3,13 @@ image: Visual Studio 2017
 
 init:
   - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
+    # upgrade Chocolatey installation, since there should be fixed bug (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109)
+  - nuget install chocolatey
+  - choco --version
     # Disable chocolatey´s verbose download output
   - choco feature disable --name showDownloadProgress
   - choco install virtualbox --yes
-  - choco install vagrant --yes --version 2.0.4
+  - choco install vagrant --yes
     # Vagrant correctly installed?
   - vagrant --version
 
