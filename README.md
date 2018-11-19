@@ -157,11 +157,12 @@ version: '{build}-{branch}'
 image: Visual Studio 2017
 
 init:
+  # Disable Hyper-V
+  #- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /NoRestart
   - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
     # Disable chocolatey´s verbose download output
   - choco feature disable --name showDownloadProgress
   - choco install virtualbox --yes
-  #- choco install vagrant --yes
 
 install:
   - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"

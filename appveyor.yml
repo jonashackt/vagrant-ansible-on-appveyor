@@ -1,31 +1,25 @@
 version: '{build}-{branch}'
-image: Visual Studio 2017
+
+image: Ubuntu
 
 init:
-  # Disable Hyper-V
-  #- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /NoRestart
-  - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
-    # Disable chocolatey´s verbose download output
-  - choco feature disable --name showDownloadProgress
-  - choco install virtualbox --yes
-  #- choco install vagrant --yes
+- sudo apt-get -yq install python-pip virtualbox
+# How did the VirtualBox installation go?
+- VBoxManage --version
+- sudo pip install ansible
+# Ansible correctly installed?
+- ansible --version
 
 install:
-  - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
-  - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
-  - set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
-  # Vagrant correctly installed?
-  - vagrant --version
-  - ssh -V
-  - ipconfig /all
+# we have to download Vagrant in the install step (not init), because otherwise we´ll run into errors like
+# fatal: destination path '/home/appveyor/projects/vagrant-ansible-on-appveyor' already exists and is not an empty directory.
+# see https://help.appveyor.com/discussions/problems/2367-git-clone-fails-non-empty-dir
+- sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
+# Install Vagrant package
+- sudo dpkg -i vagrant_2.2.1_x86_64.deb
+# Vagrant correctly installed?
+- vagrant --version
 
 build_script:
-  - ps: Test-NetConnection google.com -Port 80
-  - vagrant up
-  - vagrant ssh -c "echo 'hello world!'"
-  #|| ssh vagrant@127.0.0.1 -p 2222 -i .vagrant\machines\default\virtualbox\private_key -o StrictHostKeyChecking=no -o UserKnownHostsFile=/dev/null -vvv -C "pwd"
-  #- vagrant ssh -c "uname -a"
-
-test: off
-#test_script:
-#  - ansible-playbook playbook.yml -i hosts --syntax-check
+- vagrant up
+- vagrant ssh -c "echo 'hello world!'"
