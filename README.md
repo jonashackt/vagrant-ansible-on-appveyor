@@ -157,26 +157,26 @@ version: '{build}-{branch}'
 image: Visual Studio 2017
 
 init:
-  # Disable Hyper-V
-  #- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /NoRestart
-  - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
-    # Disable chocolatey´s verbose download output
-  - choco feature disable --name showDownloadProgress
-  - choco install virtualbox --yes
+# Disable Hyper-V
+- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
+- ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
+  # Disable chocolatey´s verbose download output
+- choco feature disable --name showDownloadProgress
+- choco install virtualbox --yes
 
 install:
-  - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
-  - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
-  - set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
-  # Vagrant correctly installed?
-  - vagrant --version
-  - ssh -V
-  - ipconfig /all
+- ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
+- ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
+- set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
+# Vagrant correctly installed?
+- vagrant --version
+- ssh -V
+- ipconfig /all
 
 build_script:
-  - ps: Test-NetConnection google.com -Port 80
-  - vagrant up
-  - vagrant ssh -c "echo 'hello world!'"
+- ps: Test-NetConnection google.com -Port 80
+- vagrant up
+- vagrant ssh -c "echo 'hello world!'"
 ```
 
 
