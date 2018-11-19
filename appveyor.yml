@@ -3,18 +3,18 @@ image: Visual Studio 2017
 
 init:
   - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
-    # upgrade Chocolatey installation, since there should be fixed bug (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109)
-  - ps: Install-Package chocolatey
-  - ps: Initialize-Chocolatey
-  - choco --version
     # Disable chocolatey´s verbose download output
   - choco feature disable --name showDownloadProgress
   - choco install virtualbox --yes
-  - choco install vagrant --yes
-    # Vagrant correctly installed?
-  - vagrant --version
+  - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
+  - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
+  #- choco install vagrant --yes
+
 
 install:
+  - set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
+  # Vagrant correctly installed?
+  - vagrant --version
   - ssh -V
   - ipconfig /all
 
