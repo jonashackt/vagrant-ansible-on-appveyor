@@ -150,7 +150,7 @@ As I constantly ran into timeouts in the end - and I´am realizing, that I insta
 
 ##### Visual Studio 2017 (Windows Server 2016) image on AppVeyor
 
-So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images). After problems with the chocolatey Vagrant installation (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109), I needed to download and install Vagrant manually:
+So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images):
 
 ```
 version: '{build}-{branch}'
@@ -179,4 +179,26 @@ build_script:
 - vagrant ssh -c "echo 'hello world!'"
 ```
 
+At first, we need to disable Hyper-V - because this would collide with VirtualBox and results in failed startups of our Vagrant Boxes:
 
+```
+==> ubuntu: Forwarding ports...
+    ubuntu: 22 (guest) => 2222 (host) (adapter 1)
+==> ubuntu: Running 'pre-boot' VM customizations...
+==> ubuntu: Booting VM...
+There was an error while executing `VBoxManage`, a CLI used by Vagrant
+for controlling VirtualBox. The command and stderr is shown below.
+Command: ["startvm", "f0b5eed7-7f46-46fa-a9b5-7c8c4ba7d93e", "--type", "headless"]
+Stderr: VBoxManage.exe: error: Raw-mode is unavailable courtesy of Hyper-V. (VERR_SUPDRV_NO_RAW_MODE_HYPER_V_ROOT)
+VBoxManage.exe: error: Details: code E_FAIL (0x80004005), component ConsoleWrap, interface IConsole
+```
+
+We do this with the help of `dism`, the PowerShell comands like `Disable-WindowsOptionalFeature` doesn´t seem to work with Hyper-V on AppVeyor, so we go with:
+
+```
+- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
+```
+
+You may note, that AppVeyor also supports reboots of build workers - the `/Quiet` option prevents us from errors and `/Disable-Feature:Microsoft-Hyper-V` reboots the worker finally after removing Hyper-V.
+
+For installing VirtualBox, we´re using chocolatey for it´s ease of use here. Sadly that´s not possible for Vagrant. After problems with the chocolatey Vagrant installation (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109), I needed to download and install Vagrant manually.
