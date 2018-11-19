@@ -210,9 +210,11 @@ It´s almost crazy what AppVeyor allows you to do: You can really connect into a
 1. Go to settings of your AppVeyor project and head over to `Environment`
 2. Create a new Environment variable `APPVEYOR_RDP_PASSWORD` and insert a (min. 6 long, UPPER and lower case password, with one non-alphanumeric character) password
 3. Add `- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))` to your `init` section.
-4. Push your code and the IP/Port & username will be printed in the build log for you. Use them to connect via your favorite RDP client
+4. Push your code and the IP/Port & username will be printed in the build log for you:
 
-Now you can watch things get installed and configured:
+![appveyor-rdp-info](screenshots/appveyor-rdp-info.png) 
+
+Use these infos to connect via your favorite RDP client! Now you can watch things get installed and configured:
 
 ![appveyor-rdp-into-worker](screenshots/appveyor-rdp-into-worker.png)
 
