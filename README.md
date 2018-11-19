@@ -150,7 +150,7 @@ As I constantly ran into timeouts in the end - and I´am realizing, that I insta
 
 ##### Visual Studio 2017 (Windows Server 2016) image on AppVeyor
 
-So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images). After problems with the chocolatey Vagrant installation (see &), I needed to download and install Vagrant manually:
+So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images). After problems with the chocolatey Vagrant installation (see https://github.com/chocolatey/chocolatey-coreteampackages/issues/1099 & https://github.com/chocolatey/chocolatey-coreteampackages/pull/1109), I needed to download and install Vagrant manually:
 
 ```
 version: '{build}-{branch}'
