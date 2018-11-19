@@ -7,6 +7,11 @@ init:
 on_finish:
 - ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
+cache:
+- C:\ProgramData\chocolatey\lib
+- C:\Vagrant
+- C:\Users\appveyor\.vagrant.d
+
 install:
 # Disable Hyper-V
 - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
