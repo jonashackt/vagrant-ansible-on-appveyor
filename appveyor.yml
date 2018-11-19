@@ -6,7 +6,7 @@ init:
     # Disable chocolatey´s verbose download output
   - choco feature disable --name showDownloadProgress
   - choco install virtualbox --yes
-  - choco install vagrant --yes
+  - choco install vagrant --yes --version 2.0.4
     # Vagrant correctly installed?
   - vagrant --version
 
