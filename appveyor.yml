@@ -3,12 +3,14 @@ image: Visual Studio 2017
 
 init:
   - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
-  - ps: choco install virtualbox --yes
+    # Disable chocolatey´s verbose download output
+  - choco feature disable --name showDownloadProgress
+  - choco install virtualbox --yes
     # How did the VirtualBox installation go?
-  - ps: VBoxManage --version
-  - ps: choco install vagrant --yes
+  - VBoxManage --version
+  - choco install vagrant --yes
     # Vagrant correctly installed?
-  - ps: vagrant --version
+  - vagrant --version
 
 install:
   - ssh -V
