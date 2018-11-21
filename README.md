@@ -153,18 +153,27 @@ As I constantly ran into timeouts in the end - and I´am realizing, that I insta
 So let´s switch [the base image](https://www.appveyor.com/docs/build-environment/#build-worker-images):
 
 ```
-version: '{build}-{branch}'
+version: '1.0.{build}-{branch}'
 image: Visual Studio 2017
 
+# RDP Debugging
 init:
+- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+#on_finish:
+#- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+
+cache:
+- C:\ProgramData\chocolatey\lib
+- C:\Vagrant
+- C:\Users\appveyor\.vagrant.d
+
+install:
 # Disable Hyper-V
 - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
 - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
   # Disable chocolatey´s verbose download output
 - choco feature disable --name showDownloadProgress
 - choco install virtualbox --yes
-
-install:
 - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
 - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
 - set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
@@ -176,7 +185,7 @@ install:
 build_script:
 - ps: Test-NetConnection google.com -Port 80
 - vagrant up
-- vagrant ssh -c "echo 'hello world!'"
+- vagrant ssh -
 ```
 
 At first, we need to disable Hyper-V - because this would collide with VirtualBox and results in failed startups of our Vagrant Boxes:

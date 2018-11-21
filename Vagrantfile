@@ -1,6 +1,6 @@
 Vagrant.configure("2") do |config|
     config.vm.box = "ubuntu/trusty32"
-    config.vm.box_version = 'v20171213.0.3'
+    config.vm.box_version = "20171213.0.3"
 
     config.vm.define 'ubuntu'
     config.vm.hostname = 'ubuntu'
