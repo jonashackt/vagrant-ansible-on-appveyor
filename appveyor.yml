@@ -1,4 +1,4 @@
-version: '{build}-{branch}'
+version: '1.0.{build}-{branch}'
 image: Ubuntu1804
 
 # Debugging via SSH
