@@ -246,3 +246,11 @@ init:
 Now after starting the build, you should get all the infos needed to connect to the worker via SSH:
 
 ![appveyor-ssh-info](screenshots/appveyor-ssh-info.png)
+
+Just execute the ssh command and you´re in:
+
+![appveyor-ssh-into-worker](screenshots/appveyor-ssh-into-worker.png)
+
+A really helpful ressource on how to debug the VirtualBox startup on Linux provides this link: https://blogs.oracle.com/scoter/virtualbox-log-files-v2
+
+Have a look into `~/VirtualBox VMs/ubuntu/Logs$` inside the ssh session on the AppVeyor worker and do a `tail VBox.log -f`.
