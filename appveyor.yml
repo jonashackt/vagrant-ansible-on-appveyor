@@ -5,8 +5,13 @@ image: Ubuntu1804
 init:
 - sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
 
+cache:
+- /home/appveyor/.vagrant.d/boxes
+
 install:
-- sudo apt-get -yq install python-pip virtualbox
+- sudo wget https://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
+- sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
+- sudo apt-get -yq install python-pip
 # How did the VirtualBox installation go?
 - VBoxManage --version
 - sudo pip install ansible
