@@ -184,8 +184,8 @@ install:
 
 build_script:
 - ps: Test-NetConnection google.com -Port 80
-- vagrant up
-- vagrant ssh -
+- vagrant up --debug
+- vagrant ssh -c "echo 'hello world!'"
 ```
 
 At first, we need to disable Hyper-V - because this would collide with VirtualBox and results in failed startups of our Vagrant Boxes:
@@ -226,4 +226,8 @@ It´s almost crazy what AppVeyor allows you to do: You can really connect into a
 Use these infos to connect via your favorite RDP client! Now you can watch things get installed and configured:
 
 ![appveyor-rdp-into-worker](screenshots/appveyor-rdp-into-worker.png)
+
+##### SSH into your AppVeyor Ubuntu worker
+
+There´s also a way to SSH into the workers, see https://www.appveyor.com/docs/how-to/ssh-to-build-worker/
 
