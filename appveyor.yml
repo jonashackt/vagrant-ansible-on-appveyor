@@ -1,33 +1,31 @@
 version: '1.0.{build}-{branch}'
-image: Visual Studio 2015
+image: Ubuntu1804
 
-# RDP Debugging
+# Debugging via SSH
 init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
-#on_finish:
-#- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+- sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
 
 cache:
-- C:\ProgramData\chocolatey\lib
-- C:\Vagrant
-- C:\Users\appveyor\.vagrant.d
+- /home/appveyor/.vagrant.d/boxes
 
 install:
-# Disable Hyper-V
-- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
-- ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
-  # Disable chocolatey´s verbose download output
-- choco feature disable --name showDownloadProgress
-- choco install virtualbox --yes
-- ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
-- ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
-- set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
+- sudo wget https://download.virtualbox.org/virtualbox/5.2.22/virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
+- sudo dpkg -i virtualbox-5.2_5.2.22-126460~Ubuntu~bionic_amd64.deb
+- sudo apt-get -yq install python-pip
+# How did the VirtualBox installation go?
+- VBoxManage --version
+- sudo pip install ansible
+# Ansible correctly installed?
+- ansible --version
+# we have to download Vagrant in the install step (not init), because otherwise we´ll run into errors like
+# fatal: destination path '/home/appveyor/projects/vagrant-ansible-on-appveyor' already exists and is not an empty directory.
+# see https://help.appveyor.com/discussions/problems/2367-git-clone-fails-non-empty-dir
+- sudo wget -nv https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.deb
+# Install Vagrant package
+- sudo dpkg -i vagrant_2.2.1_x86_64.deb
 # Vagrant correctly installed?
 - vagrant --version
-- ssh -V
-- ipconfig /all
 
 build_script:
-- ps: Test-NetConnection google.com -Port 80
-- vagrant up --debug
+- vagrant up
 - vagrant ssh -c "echo 'hello world!'"
