@@ -231,3 +231,18 @@ Use these infos to connect via your favorite RDP client! Now you can watch thing
 
 There´s also a way to SSH into the workers, see https://www.appveyor.com/docs/how-to/ssh-to-build-worker/
 
+Add the following 2 environment variables:
+
+`APPVEYOR_SSH_KEY` containing your public key as the value
+`APPVEYOR_SSH_BLOCK` set to `true` 
+
+and add the following line to your `init` phase inside the `appveyor.yml`:
+
+```
+init:
+- sh: curl -sflL 'https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-ssh.sh' | bash -e -
+```
+
+Now after starting the build, you should get all the infos needed to connect to the worker via SSH:
+
+![appveyor-ssh-info](screenshots/appveyor-ssh-info.png)
