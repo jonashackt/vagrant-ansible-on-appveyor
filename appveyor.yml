@@ -1,5 +1,6 @@
 version: '1.0.{build}-{branch}'
 image: Ubuntu1804
+platform: x64
 
 # Debugging via SSH
 init:
