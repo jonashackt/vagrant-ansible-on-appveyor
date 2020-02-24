@@ -206,7 +206,7 @@ Stderr: VBoxManage.exe: error: Raw-mode is unavailable courtesy of Hyper-V. (VER
 VBoxManage.exe: error: Details: code E_FAIL (0x80004005), component ConsoleWrap, interface IConsole
 ```
 
-We do this with the help of `dism`, the PowerShell comands like `Disable-WindowsOptionalFeature` doesn´t seem to work with Hyper-V on AppVeyor, so we go with:
+We do this with the help of `dism`, the PowerShell commands like `Disable-WindowsOptionalFeature` doesn´t seem to work with Hyper-V on AppVeyor, so we go with:
 
 ```
 - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet

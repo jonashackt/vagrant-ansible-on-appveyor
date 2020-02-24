@@ -14,7 +14,7 @@ cache:
 
 install:
   # Disable Hyper-V
-  - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
+  #- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
   - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
     # Disable chocolatey´s verbose download output
   - choco feature disable --name showDownloadProgress
