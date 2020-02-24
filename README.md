@@ -102,6 +102,8 @@ https://help.appveyor.com/discussions/problems/1247-vagrant-not-working-inside-a
 
 https://help.appveyor.com/discussions/problems/22269-packer-build-fails-on-vboxmanage-error-vboxmanage-error-vt-x-is-not-available-verr_vmx_no_vmx
 
+--> Let's try to get nested virtualization enabled for this project here also: https://help.appveyor.com/discussions/questions/46774-nested-virtualization-needed-for-opensource-projects-vt-x-is-not-available-verr_vmx_no_vmx (and later for Molecule as well)
+
 https://ci.appveyor.com/project/tknerr/vagrant-appveyor-testing/history
 
 [Ubuntu Image specs on AppVeyor](https://www.appveyor.com/docs/linux-images-software/)
