@@ -1,33 +1,33 @@
 version: '1.0.{build}-{branch}'
-image: Visual Studio 2017
+image: Visual Studio 2019
 
 # RDP Debugging
 init:
-- ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
+  - ps: iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 #on_finish:
 #- ps: $blockRdp = $true; iex ((new-object net.webclient).DownloadString('https://raw.githubusercontent.com/appveyor/ci/master/scripts/enable-rdp.ps1'))
 
 cache:
-- C:\ProgramData\chocolatey\lib
-- C:\Vagrant
-- C:\Users\appveyor\.vagrant.d
+  - C:\ProgramData\chocolatey\lib
+  - C:\Vagrant
+  - C:\Users\appveyor\.vagrant.d
 
 install:
-# Disable Hyper-V
-- dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
-- ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
-  # Disable chocolatey´s verbose download output
-- choco feature disable --name showDownloadProgress
-- choco install virtualbox --yes
-- ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.1/vagrant_2.2.1_x86_64.msi"
-- ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.1_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
-- set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
-# Vagrant correctly installed?
-- vagrant --version
-- ssh -V
-- ipconfig /all
+  # Disable Hyper-V
+  - dism.exe /Online /Disable-Feature:Microsoft-Hyper-V /Quiet
+  - ps: mkdir C:\Users\appveyor\.vagrant.d | Out-Null
+    # Disable chocolatey´s verbose download output
+  - choco feature disable --name showDownloadProgress
+  - choco install virtualbox --yes
+  - ps: Start-FileDownload "https://releases.hashicorp.com/vagrant/2.2.7/vagrant_2.2.7_x86_64.msi"
+  - ps: Start-Process -FilePath "msiexec.exe" -ArgumentList "/a vagrant_2.2.7_x86_64.msi /qb TARGETDIR=C:\Vagrant" -Wait
+  - set PATH=C:\Vagrant\HashiCorp\Vagrant\bin;C:\VBox;%PATH%
+  # Vagrant correctly installed?
+  - vagrant --version
+  - ssh -V
+  - ipconfig /all
 
 build_script:
-- ps: Test-NetConnection google.com -Port 80
-- vagrant up
-- vagrant ssh -c "echo 'hello world!'"
+  - ps: Test-NetConnection google.com -Port 80
+  - vagrant up
+  - vagrant ssh -c "echo 'hello world!'"

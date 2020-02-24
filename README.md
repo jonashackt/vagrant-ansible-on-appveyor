@@ -1,8 +1,8 @@
-# vagrant-ansible-on-travisci
+# vagrant-ansible-on-appveyor
 
 [![Build status](https://ci.appveyor.com/api/projects/status/i7865icuuhd6457s?svg=true)](https://ci.appveyor.com/project/jonashackt/vagrant-ansible-on-appveyor)
 
-Example project showing how to install and use Vagrant on TravisCI and how to use a Ansible playbook to connect to the running Vagrant Box inside Travis
+Example project showing how to install and use Vagrant on a "free" Cloud CI system to finally be able to use Ansible to configure the VagrantBox.
 
 
 ## Why Vagrant on a CI system?
@@ -97,6 +97,10 @@ In the end I overlooked this comment here: https://stackoverflow.com/questions/3
 ##### some good resources
 
 https://help.appveyor.com/discussions/problems/1247-vagrant-not-working-inside-appveyor
+
+--> conclusion: we need nested virtualization (VT-X) enabled. Since those machines aren't accessible for free in order to be able to use that, the AppVeyor team occasionally grants access for OpenSource projects:
+
+https://help.appveyor.com/discussions/problems/22269-packer-build-fails-on-vboxmanage-error-vboxmanage-error-vt-x-is-not-available-verr_vmx_no_vmx
 
 https://ci.appveyor.com/project/tknerr/vagrant-appveyor-testing/history
 
