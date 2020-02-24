@@ -1,5 +1,5 @@
 version: '1.0.{build}-{branch}'
-image: Visual Studio 2019
+image: Windows Server 2019
 
 # RDP Debugging
 init:
